@@ -6,11 +6,8 @@
  </PropertyGroup>
 
  <ItemGroup>
-  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0-*" />
- </ItemGroup>
-
- <ItemGroup>
-   <ProjectReference Include="..\..\..\..\src\AspNetCore\WebApi\src\Asp.Versioning.Mvc.ApiExplorer\Asp.Versioning.Mvc.ApiExplorer.csproj" />
+  <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="7.0.0" />
+  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
  </ItemGroup>
 
 </Project>

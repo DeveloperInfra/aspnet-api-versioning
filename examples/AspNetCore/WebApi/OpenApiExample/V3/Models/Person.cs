@@ -1,20 +1,20 @@
-﻿namespace ApiVersioning.Examples.V3.Models;
+﻿using System.ComponentModel.DataAnnotations;
 
-using System.ComponentModel.DataAnnotations;
+namespace ApiVersioning.Examples.V3.Models;
 
 /// <summary>
-/// Represents a person.
+///     Represents a person.
 /// </summary>
 public class Person
 {
     /// <summary>
-    /// Gets or sets the unique identifier for a person.
+    ///     Gets or sets the unique identifier for a person.
     /// </summary>
     /// <value>The person's unique identifier.</value>
     public int Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the first name of a person.
+    ///     Gets or sets the first name of a person.
     /// </summary>
     /// <value>The person's first name.</value>
     [Required]
@@ -22,7 +22,7 @@ public class Person
     public string FirstName { get; set; }
 
     /// <summary>
-    /// Gets or sets the last name of a person.
+    ///     Gets or sets the last name of a person.
     /// </summary>
     /// <value>The person's last name.</value>
     [Required]
@@ -30,13 +30,13 @@ public class Person
     public string LastName { get; set; }
 
     /// <summary>
-    /// Gets or sets the email address for a person.
+    ///     Gets or sets the email address for a person.
     /// </summary>
     /// <value>The person's email address.</value>
     public string Email { get; set; }
 
     /// <summary>
-    /// Gets or sets the telephone number for a person.
+    ///     Gets or sets the telephone number for a person.
     /// </summary>
     /// <value>The person's telephone number.</value>
     public string Phone { get; set; }

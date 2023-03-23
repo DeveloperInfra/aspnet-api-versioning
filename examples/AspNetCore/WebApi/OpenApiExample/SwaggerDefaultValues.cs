@@ -1,16 +1,18 @@
-﻿namespace ApiVersioning.Examples;
-
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
+﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text.Json;
 
+namespace ApiVersioning.Examples;
+
 /// <summary>
-/// Represents the OpenAPI/Swashbuckle operation filter used to document information provided, but not used.
+///     Represents the OpenAPI/Swashbuckle operation filter used to document information provided, but not used.
 /// </summary>
-/// <remarks>This <see cref="IOperationFilter"/> is only required due to bugs in the <see cref="SwaggerGenerator"/>.
-/// Once they are fixed and published, this class can be removed.</remarks>
+/// <remarks>
+///     This <see cref="IOperationFilter" /> is only required due to bugs in the <see cref="SwaggerGenerator" />.
+///     Once they are fixed and published, this class can be removed.
+/// </remarks>
 public class SwaggerDefaultValues : IOperationFilter
 {
     /// <inheritdoc />
@@ -28,18 +30,11 @@ public class SwaggerDefaultValues : IOperationFilter
             var response = operation.Responses[responseKey];
 
             foreach ( var contentType in response.Content.Keys )
-            {
                 if ( !responseType.ApiResponseFormats.Any( x => x.MediaType == contentType ) )
-                {
                     response.Content.Remove( contentType );
-                }
-            }
         }
 
-        if ( operation.Parameters == null )
-        {
-            return;
-        }
+        if ( operation.Parameters == null ) return;
 
         // REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/412
         // REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/pull/413

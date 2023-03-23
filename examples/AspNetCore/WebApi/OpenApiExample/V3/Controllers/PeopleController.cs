@@ -1,24 +1,24 @@
-﻿namespace ApiVersioning.Examples.V3.Controllers;
-
-using Microsoft.AspNetCore.Mvc;
-using ApiVersioning.Examples.V3.Models;
+﻿using ApiVersioning.Examples.V3.Models;
 using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ApiVersioning.Examples.V3.Controllers;
 
 /// <summary>
-/// Represents a RESTful people service.
+///     Represents a RESTful people service.
 /// </summary>
 [ApiVersion( 3.0 )]
 [Route( "api/v{version:apiVersion}/[controller]" )]
 public class PeopleController : ControllerBase
 {
     /// <summary>
-    /// Gets all people.
+    ///     Gets all people.
     /// </summary>
     /// <returns>All available people.</returns>
     /// <response code="200">The successfully retrieved people.</response>
     [HttpGet]
     [Produces( "application/json" )]
-    [ProducesResponseType( typeof( IEnumerable<Person> ), 200 )]
+    [ProducesResponseType( typeof(IEnumerable<Person>), 200 )]
     public IActionResult Get()
     {
         var people = new Person[]
@@ -29,7 +29,7 @@ public class PeopleController : ControllerBase
                 FirstName = "John",
                 LastName = "Doe",
                 Email = "john.doe@somewhere.com",
-                Phone = "555-987-1234",
+                Phone = "555-987-1234"
             },
             new()
             {
@@ -37,7 +37,7 @@ public class PeopleController : ControllerBase
                 FirstName = "Bob",
                 LastName = "Smith",
                 Email = "bob.smith@somewhere.com",
-                Phone = "555-654-4321",
+                Phone = "555-654-4321"
             },
             new()
             {
@@ -45,15 +45,15 @@ public class PeopleController : ControllerBase
                 FirstName = "Jane",
                 LastName = "Doe",
                 Email = "jane.doe@somewhere.com",
-                Phone = "555-789-3456",
-            },
+                Phone = "555-789-3456"
+            }
         };
 
         return Ok( people );
     }
 
     /// <summary>
-    /// Gets a single person.
+    ///     Gets a single person.
     /// </summary>
     /// <param name="id">The requested person identifier.</param>
     /// <returns>The requested person.</returns>
@@ -61,20 +61,22 @@ public class PeopleController : ControllerBase
     /// <response code="404">The person does not exist.</response>
     [HttpGet( "{id:int}" )]
     [Produces( "application/json" )]
-    [ProducesResponseType( typeof( Person ), 200 )]
+    [ProducesResponseType( typeof(Person), 200 )]
     [ProducesResponseType( 404 )]
-    public IActionResult Get( int id ) =>
-        Ok( new Person()
+    public IActionResult Get( int id )
+    {
+        return Ok( new Person
         {
             Id = id,
             FirstName = "John",
             LastName = "Doe",
             Email = "john.doe@somewhere.com",
-            Phone = "555-987-1234",
+            Phone = "555-987-1234"
         } );
+    }
 
     /// <summary>
-    /// Creates a new person.
+    ///     Creates a new person.
     /// </summary>
     /// <param name="person">The person to create.</param>
     /// <param name="apiVersion">The requested API version.</param>
@@ -84,11 +86,11 @@ public class PeopleController : ControllerBase
     [HttpPost]
     [Consumes( "application/json" )]
     [Produces( "application/json" )]
-    [ProducesResponseType( typeof( Person ), 201 )]
+    [ProducesResponseType( typeof(Person), 201 )]
     [ProducesResponseType( 400 )]
     public IActionResult Post( [FromBody] Person person, ApiVersion apiVersion )
     {
         person.Id = 42;
-        return CreatedAtAction( nameof( Get ), new { id = person.Id }, person );
+        return CreatedAtAction( nameof(Get), new { id = person.Id }, person );
     }
 }

@@ -1,11 +1,11 @@
-﻿namespace ApiVersioning.Examples.V1.Controllers;
-
-using ApiVersioning.Examples.V1.Models;
+﻿using ApiVersioning.Examples.V1.Models;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
+namespace ApiVersioning.Examples.V1.Controllers;
+
 /// <summary>
-/// Represents a RESTful people service.
+///     Represents a RESTful people service.
 /// </summary>
 [ApiVersion( 1.0 )]
 [ApiVersion( 0.9, Deprecated = true )]
@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 public class PeopleController : ControllerBase
 {
     /// <summary>
-    /// Gets a single person.
+    ///     Gets a single person.
     /// </summary>
     /// <param name="id">The requested person identifier.</param>
     /// <returns>The requested person.</returns>
@@ -21,13 +21,15 @@ public class PeopleController : ControllerBase
     /// <response code="404">The person does not exist.</response>
     [HttpGet( "{id:int}" )]
     [Produces( "application/json" )]
-    [ProducesResponseType( typeof( Person ), 200 )]
+    [ProducesResponseType( typeof(Person), 200 )]
     [ProducesResponseType( 404 )]
-    public IActionResult Get( int id ) =>
-        Ok( new Person()
+    public IActionResult Get( int id )
+    {
+        return Ok( new Person
         {
             Id = id,
             FirstName = "John",
-            LastName = "Doe",
+            LastName = "Doe"
         } );
+    }
 }

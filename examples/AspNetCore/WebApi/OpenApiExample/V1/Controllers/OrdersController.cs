@@ -1,11 +1,11 @@
-﻿namespace ApiVersioning.Examples.V1.Controllers;
-
-using ApiVersioning.Examples.V1.Models;
+﻿using ApiVersioning.Examples.V1.Models;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
+namespace ApiVersioning.Examples.V1.Controllers;
+
 /// <summary>
-/// Represents a RESTful service of orders.
+///     Represents a RESTful service of orders.
 /// </summary>
 [ApiVersion( 1.0 )]
 [ApiVersion( 0.9, Deprecated = true )]
@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 public class OrdersController : ControllerBase
 {
     /// <summary>
-    /// Gets a single order.
+    ///     Gets a single order.
     /// </summary>
     /// <param name="id">The requested order identifier.</param>
     /// <returns>The requested order.</returns>
@@ -21,12 +21,26 @@ public class OrdersController : ControllerBase
     /// <response code="404">The order does not exist.</response>
     [HttpGet( "{id:int}" )]
     [Produces( "application/json" )]
-    [ProducesResponseType( typeof( Order ), 200 )]
+    [ProducesResponseType( typeof(Order), 200 )]
     [ProducesResponseType( 404 )]
-    public IActionResult Get( int id ) => Ok( new Order() { Id = id, Customer = "John Doe" } );
+    public IActionResult Get( int id )
+    {
+        if ( id <= 0 )
+            return NotFound();
+        //return NotFound( new ProblemDetails
+        //{
+        //    Type = null,
+        //    Title = null,
+        //    Status = null,
+        //    Detail = null,
+        //    Instance = Request.Path.Value
+        //} );
+
+        return Ok( new Order { Id = id, Customer = "John Doe" } );
+    }
 
     /// <summary>
-    /// Places a new order.
+    ///     Places a new order.
     /// </summary>
     /// <param name="order">The order to place.</param>
     /// <returns>The created order.</returns>
@@ -36,16 +50,16 @@ public class OrdersController : ControllerBase
     [MapToApiVersion( "1.0" )]
     [Consumes( "application/json" )]
     [Produces( "application/json" )]
-    [ProducesResponseType( typeof( Order ), 201 )]
+    [ProducesResponseType( typeof(Order), 201 )]
     [ProducesResponseType( 400 )]
     public IActionResult Post( [FromBody] Order order )
     {
         order.Id = 42;
-        return CreatedAtAction( nameof( Get ), new { id = order.Id }, order );
+        return CreatedAtAction( nameof(Get), new { id = order.Id }, order );
     }
 
     /// <summary>
-    /// Updates an existing order.
+    ///     Updates an existing order.
     /// </summary>
     /// <param name="id">The requested order identifier.</param>
     /// <param name="order">The order to update.</param>
@@ -59,5 +73,8 @@ public class OrdersController : ControllerBase
     [ProducesResponseType( 204 )]
     [ProducesResponseType( 400 )]
     [ProducesResponseType( 404 )]
-    public IActionResult Patch( int id, [FromBody] Order order ) => NoContent();
+    public IActionResult Patch( int id, [FromBody] Order order )
+    {
+        return NoContent();
+    }
 }
