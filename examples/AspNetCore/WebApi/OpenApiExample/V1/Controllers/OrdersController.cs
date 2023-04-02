@@ -26,15 +26,14 @@ public class OrdersController : ControllerBase
     public IActionResult Get( int id )
     {
         if ( id <= 0 )
-            return NotFound();
-        //return NotFound( new ProblemDetails
-        //{
-        //    Type = null,
-        //    Title = null,
-        //    Status = null,
-        //    Detail = null,
-        //    Instance = Request.Path.Value
-        //} );
+            return NotFound( new ProblemDetails
+            {
+                Type = "https://httpstatuses.com/404",
+                Title = "The requested order does not exist.",
+                Status = 404,
+                Detail = "No order with the specified identifier was found.",
+                Instance = Request.Path.Value
+            } );
 
         return Ok( new Order { Id = id, Customer = "John Doe" } );
     }
